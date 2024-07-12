@@ -139,7 +139,7 @@ import Lottie
 
 ```
 
-2. Xcode ask you for creating the bridge header. Accept it. The content of `[your-project-name]-Bridging-Header.h` would be like this:
+2. Xcode asks you to create the bridge header. Accept it. The content of `[your-project-name]-Bridging-Header.h` would be like this:
 
 ```objc
 // React-Native >= 0.70
