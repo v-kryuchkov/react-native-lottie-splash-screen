@@ -39,6 +39,6 @@ __metadata:
     lottie-ios: 4.4.3
     lottie-react-native: 6.7.2
   peerDependencies:
-    react-native: ">=0.57.0"
+    react-native: ">=0.70.0"
   languageName: unknown
   linkType: soft
