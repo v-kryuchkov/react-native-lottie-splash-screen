@@ -35,7 +35,7 @@ You can run [examples](https://github.com/HwangTaehyun/react-native-lottie-splas
 
 ## React-Native >= 0.70
 ### First step (Download):
-Run `yarn add react-native-lottie-splash-screen`
+Run `yarn add lottie-react-native@6.7.2 react-native-lottie-splash-screen`
 
 ### Second step (Plugin Installation):
 
@@ -51,11 +51,11 @@ For android, the package will be linked automatically on build.
 
 **Android:**
 
-1. Update the `MainApplication.kt` file to use `react-native-lottie-splash-screen` via the following changes:
+1. Update the `MainActivity.kt` file to use `react-native-lottie-splash-screen` via the following changes:
 
 ```kotlin
 // React-Native >= 0.70
-// MainApplication.kt file contents
+// MainActivity.kt file contents
 package com.examples
 
 import com.facebook.react.ReactActivity
@@ -64,6 +64,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnable
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 import org.devio.rn.splashscreen.SplashScreen // Add this Line to your project
+import android.os.Bundle
 
 class MainActivity : ReactActivity() {
 
@@ -71,6 +72,7 @@ class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie)
+    // Skip waiting for the Lottie animation to finish
     SplashScreen.setAnimationFinished(true)
   }
   /* End */
@@ -198,7 +200,7 @@ import Lottie
     LottieAnimationView *animationView = (LottieAnimationView *) animationUIView;
     // play
     [t playWithAnimationView:animationView];
-    // If you want the animation layout to be forced to remove when hide is called, use this code
+    // Skip waiting for the Lottie animation to finish
     [RNSplashScreen setAnimationFinished:true];
   }
  
@@ -600,6 +602,7 @@ import RootNavigator from "@navi/RootNavigator";
 
 const App = () => {
   useEffect(() => {
+    // Hide Lottie splash screen immediately; works when setAnimationFinished is true
     LottieSplashScreen.hide(); // here
   }, []);
   return <RootNavigator />;

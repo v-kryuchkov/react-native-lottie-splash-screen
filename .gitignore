@@ -49,3 +49,5 @@ jspm_packages
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+package.tgz
