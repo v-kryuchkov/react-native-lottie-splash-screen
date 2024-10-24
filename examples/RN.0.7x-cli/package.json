@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "example7x",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "18.3.1",
-    "react-native": "0.76.0"
+    "react-native": "0.76.0",
+    "react-native-lottie-splash-screen": "file:../../package.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -35,5 +36,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@3.6.4"
 }

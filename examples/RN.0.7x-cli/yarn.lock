@@ -4585,9 +4585,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"example@workspace:.":
+"example7x@workspace:.":
   version: 0.0.0-use.local
-  resolution: "example@workspace:."
+  resolution: "example7x@workspace:."
   dependencies:
     "@babel/core": ^7.25.2
     "@babel/preset-env": ^7.25.3
@@ -4607,6 +4607,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.3.1
     react-native: 0.76.0
+    react-native-lottie-splash-screen: "file:../../package.tgz"
     react-test-renderer: 18.3.1
     typescript: 5.0.4
   languageName: unknown
@@ -6583,6 +6584,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-ios@npm:4.4.3":
+  version: 4.4.3
+  resolution: "lottie-ios@npm:4.4.3"
+  checksum: 64a3d3d44e84deb9ead7e26805eb4606a90e3703a29a91ea446eda6c0f71568e3fad75ce33e1d57e9ed68d12f16d4dce3ad1e5bee28483e083f2f4c8b0e971b1
+  languageName: node
+  linkType: hard
+
+"lottie-react-native@npm:6.7.2":
+  version: 6.7.2
+  resolution: "lottie-react-native@npm:6.7.2"
+  peerDependencies:
+    "@dotlottie/react-player": ^1.6.1
+    "@lottiefiles/react-lottie-player": ^3.5.3
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@dotlottie/react-player":
+      optional: true
+    "@lottiefiles/react-lottie-player":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 8b14ca10f4f0e75505ee5485b47c31db2146baea1634e66f0d485abb8a44ba2019930239970015cedaad627e306828be977b4797256aa2cc143b476ed31585fa
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -7794,6 +7822,18 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-native-lottie-splash-screen@file:../../package.tgz::locator=example7x%40workspace%3A.":
+  version: 2.0.2
+  resolution: "react-native-lottie-splash-screen@file:../../package.tgz::locator=example7x%40workspace%3A."
+  dependencies:
+    lottie-ios: 4.4.3
+    lottie-react-native: 6.7.2
+  peerDependencies:
+    react-native: ">=0.70.0"
+  checksum: ec71c902a687e9b9801aa075469874773c309bdcee07dcc46b37fd6fae637bdc1fd90fa68c12b0d9d8be386a64c7a2c008f3377faf04f6ef590da97c9bd1e0e5
   languageName: node
   linkType: hard
 
