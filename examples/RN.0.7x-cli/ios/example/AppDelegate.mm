@@ -31,7 +31,7 @@
     LottieAnimationView *animationView = (LottieAnimationView *) animationUIView;
     // play
     [t playWithAnimationView:animationView];
-    // If you want the animation layout to be forced to remove when hide is called, use this code
+    // Skip waiting for the Lottie animation to finish
     [RNSplashScreen setAnimationFinished:true];
   }
   
