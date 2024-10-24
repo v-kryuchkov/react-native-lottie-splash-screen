@@ -5,8 +5,10 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
+import LottieSplashScreen from 'react-native-lottie-splash-screen';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -57,6 +59,11 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    // Hide Lottie splash screen immediately; works when setAnimationFinished is true
+    LottieSplashScreen.hide();
+  }, []);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
