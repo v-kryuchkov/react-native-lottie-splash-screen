@@ -29,6 +29,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       launchOptions: launchOptions
     )
 
+    // RNSplashScreen integration
+    if let rootViewController = window?.rootViewController,
+       let rootView = rootViewController.view {
+      
+      rootView.backgroundColor = UIColor.white // change with your desired backgroundColor
+
+      let dynamic = Dynamic()
+      let animationUIView = dynamic.createAnimationView(rootView: rootView, lottieName: "loading") // change lottieName to your lottie files name
+
+      // register LottieSplashScreen to RNSplashScreen
+      RNSplashScreen.showLottieSplash(animationUIView, inRootView: rootView)
+      
+      // play animation
+      dynamic.play(animationView: animationUIView)
+      
+      // Skip waiting for the Lottie animation to finish
+      RNSplashScreen.setAnimationFinished(true)
+    }
+
     return true
   }
 }
