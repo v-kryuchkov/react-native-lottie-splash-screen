@@ -10,10 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "lottie-react-native": "6.7.2",
+    "@attarchi/react-native-lottie-splash-screen": "file:../../package.tgz",
+    "lottie-react-native": "7.3.1",
     "react": "19.0.0",
-    "react-native": "0.79.5",
-    "react-native-lottie-splash-screen": "file:../../package.tgz"
+    "react-native": "0.79.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

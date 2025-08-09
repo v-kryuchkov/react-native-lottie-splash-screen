@@ -7,7 +7,7 @@
 
 import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
-import LottieSplashScreen from 'react-native-lottie-splash-screen';
+import LottieSplashScreen from '@attarchi/react-native-lottie-splash-screen';
 import {
   ScrollView,
   StatusBar,
