@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D7682841D8E76D10014119E /* RNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7682831D8E76D10014119E /* RNSplashScreen.m */; };
+		3D7682841D8E76D10014119E /* RNSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7682831D8E76D10014119E /* RNSplashScreen.swift */; };
+		3D7682861D8E76D10014119E /* RNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7682851D8E76D10014119E /* RNSplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +25,9 @@
 
 /* Begin PBXFileReference section */
 		3D7682761D8E76B80014119E /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSplashScreen.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3D7682821D8E76D10014119E /* RNSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSplashScreen.h; sourceTree = "<group>"; };
-		3D7682831D8E76D10014119E /* RNSplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSplashScreen.m; sourceTree = "<group>"; };
+		3D7682831D8E76D10014119E /* RNSplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNSplashScreen.swift; sourceTree = "<group>"; };
+		3D7682851D8E76D10014119E /* RNSplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSplashScreen.m; sourceTree = "<group>"; };
+		3D7682871D8E76D10014119E /* RNSplashScreen-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNSplashScreen-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,8 +44,9 @@
 		3D76826D1D8E76B80014119E = {
 			isa = PBXGroup;
 			children = (
-				3D7682821D8E76D10014119E /* RNSplashScreen.h */,
-				3D7682831D8E76D10014119E /* RNSplashScreen.m */,
+				3D7682831D8E76D10014119E /* RNSplashScreen.swift */,
+				3D7682851D8E76D10014119E /* RNSplashScreen.m */,
+				3D7682871D8E76D10014119E /* RNSplashScreen-Bridging-Header.h */,
 				3D7682771D8E76B80014119E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,7 +116,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D7682841D8E76D10014119E /* RNSplashScreen.m in Sources */,
+				3D7682841D8E76D10014119E /* RNSplashScreen.swift in Sources */,
+				3D7682861D8E76D10014119E /* RNSplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +165,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -198,6 +203,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -206,10 +212,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "RNSplashScreen-Bridging-Header.h";
+				DEFINES_MODULE = YES;
+				CLANG_ENABLE_MODULES = YES;
 			};
 			name = Debug;
 		};
@@ -217,10 +227,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "RNSplashScreen-Bridging-Header.h";
+				DEFINES_MODULE = YES;
+				CLANG_ENABLE_MODULES = YES;
 			};
 			name = Release;
 		};
