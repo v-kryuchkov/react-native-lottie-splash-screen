@@ -11,10 +11,7 @@ class MainActivity : ReactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie)
-
-    // Skip waiting for the Lottie animation to finish
-    SplashScreen.setAnimationFinished(true)
+    SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie, false)
   }
   
   /**
