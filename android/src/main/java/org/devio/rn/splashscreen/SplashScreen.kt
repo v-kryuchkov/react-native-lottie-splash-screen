@@ -1,3 +1,12 @@
+/**
+ * SplashScreen
+ * from：http://attarchi.github.io
+ * Author: Attarchi
+ * GitHub: https://github.com/attarchi
+ * Email: attarchi@me.com
+ * Swift version by: React Native Community
+ */
+
 package org.devio.rn.splashscreen
 
 import android.animation.Animator
@@ -7,27 +16,24 @@ import android.os.Build
 import com.airbnb.lottie.LottieAnimationView
 import java.lang.ref.WeakReference
 
-/**
- * SplashScreen
- * 启动屏
- * from：http://www.devio.org
- * Author:CrazyCodeBoy
- * GitHub:https://github.com/crazycodeboy
- * Email:crazycodeboy@gmail.com
- */
 object SplashScreen {
     private var mSplashDialog: Dialog? = null
     private var mActivity: WeakReference<Activity>? = null
     private var isAnimationFinished = false
     private var waiting = false
+    private var forceToCloseByHideMethod = false
+    private var animationStartTime: Long = 0
 
-    /**
-     * 打开启动屏
-     */
-    @JvmStatic
-    fun show(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int) {
-        if (activity == null) return
+
+    fun show(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false) {
+        if (activity == null) {
+            println("SplashScreen: ERROR - Activity is null")
+            return
+        }
         mActivity = WeakReference(activity)
+        this.forceToCloseByHideMethod = forceToCloseByHideMethod
+        this.isAnimationFinished = false
+        
         activity.runOnUiThread {
             if (!activity.isFinishing) {
                 mSplashDialog = Dialog(activity, themeResId)
@@ -35,19 +41,52 @@ object SplashScreen {
                 mSplashDialog?.setCancelable(false)
                 val lottie = mSplashDialog?.findViewById<LottieAnimationView>(lottieId)
 
+                // Configure Lottie animation to play once and not loop
+                // These settings will override any XML configuration
+                lottie?.repeatCount = 0
+                lottie?.speed = 1.0f
+                
+                // Ensure animation is stopped before starting programmatically
+                lottie?.cancelAnimation()
+                lottie?.progress = 0f
+
+
                 lottie?.addAnimatorListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator) {
-                        println("SplashScreen is started")
+                        println("SplashScreen: Animation started")
                     }
 
                     override fun onAnimationEnd(animation: Animator) {
+                        val animationDuration = (System.currentTimeMillis() - animationStartTime) / 1000.0
                         setAnimationFinished(true)
+                        
+                        // If forceToCloseByHideMethod is false, auto-hide after animation
+                        if (!forceToCloseByHideMethod) {
+                            if (animationDuration > 0.5) {
+                                hideSplashScreen()
+                            } else {
+                                // Wait for minimum duration
+                                lottie?.postDelayed({
+                                    hideSplashScreen()
+                                }, ((2.0 - animationDuration) * 1000).toLong())
+                            }
+                        }
                     }
 
-                    override fun onAnimationCancel(animation: Animator) {}
+                    override fun onAnimationCancel(animation: Animator) {
+                        println("SplashScreen: Animation was cancelled")
+                    }
 
-                    override fun onAnimationRepeat(animation: Animator) {}
+                    override fun onAnimationRepeat(animation: Animator) {
+                        println("SplashScreen: Animation repeated (this shouldn't happen)")
+                    }
                 })
+                
+                // Start the animation manually after a small delay
+                lottie?.postDelayed({
+                    animationStartTime = System.currentTimeMillis()
+                    lottie?.playAnimation()
+                }, 100)
 
                 if (mSplashDialog?.isShowing == false) {
                     mSplashDialog?.show()
@@ -58,11 +97,21 @@ object SplashScreen {
 
     @JvmStatic
     fun setAnimationFinished(flag: Boolean) {
-        if (mActivity == null) return
-
         isAnimationFinished = flag
+    }
 
-        val _activity = mActivity?.get() ?: return
+    fun hide(activity: Activity?) {
+        // Only hide if forceToCloseByHideMethod is true
+        if (forceToCloseByHideMethod) {
+            hideSplashScreen()
+        }
+    }
+    
+    private fun hideSplashScreen() {
+        var _activity = mActivity?.get()
+        if (_activity == null) {
+            return
+        }
 
         _activity.runOnUiThread {
             if (mSplashDialog != null && mSplashDialog?.isShowing == true) {
@@ -72,37 +121,17 @@ object SplashScreen {
                     isDestroyed = _activity.isDestroyed
                 }
 
-                if (!_activity.isFinishing && !isDestroyed && waiting) {
+                if (!_activity.isFinishing && !isDestroyed) {
                     mSplashDialog?.dismiss()
                     mSplashDialog = null
+                    waiting = true
                 }
             }
         }
     }
-
-    fun hide(activity: Activity?) {
-        var _activity = activity
-        if (_activity == null) {
-            _activity = mActivity?.get()
-        }
-
-        if (_activity == null) return
-
-        waiting = true
-
-        _activity.runOnUiThread {
-            if (mSplashDialog != null && mSplashDialog?.isShowing == true) {
-                var isDestroyed = false
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    isDestroyed = _activity.isDestroyed
-                }
-
-                if (!_activity.isFinishing && !isDestroyed && isAnimationFinished) {
-                    mSplashDialog?.dismiss()
-                    mSplashDialog = null
-                }
-            }
-        }
+    
+    @JvmStatic
+    fun setForceToCloseByHideMethod(flag: Boolean) {
+        forceToCloseByHideMethod = flag
     }
 }
