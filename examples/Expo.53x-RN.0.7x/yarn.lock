@@ -27,6 +27,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@attarchi/react-native-lottie-splash-screen@file:../../package.tgz::locator=expo7x%40workspace%3A.":
+  version: 3.0.21
+  resolution: "@attarchi/react-native-lottie-splash-screen@file:../../package.tgz::locator=expo7x%40workspace%3A."
+  dependencies:
+    lottie-ios: 4.5.0
+    lottie-react-native: 7.3.1
+  peerDependencies:
+    react-native: ">=0.70.0"
+  checksum: a3dfca28600dbbff4f79278c6edbb089deef0993330208a2c95719f2fc8b0c2d447f3087d385a1a645f13afcf3d4bccdf4284dcdf26e4aa0287ca2eeee8a4408
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:7.10.4, @babel/code-frame@npm:~7.10.4":
   version: 7.10.4
   resolution: "@babel/code-frame@npm:7.10.4"
@@ -3145,10 +3157,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "expo7x@workspace:."
   dependencies:
+    "@attarchi/react-native-lottie-splash-screen": "file:../../package.tgz"
     "@babel/core": ^7.25.2
     "@types/react": ~19.0.10
     expo: ~53.0.20
     expo-status-bar: ~2.2.3
+    lottie-react-native: 7.3.1
     react: 19.0.0
     react-native: 0.79.5
     typescript: ~5.8.3
@@ -4124,6 +4138,30 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lottie-ios@npm:4.5.0":
+  version: 4.5.0
+  resolution: "lottie-ios@npm:4.5.0"
+  checksum: 56963b4b0633889c655eb0867f8b8ae671ac437d4932cf4414d1ce758ce34816d9d92b05307d202582ef44ec37b14fd5b2528f20cc0a2fc1f9018b938f6ca5fb
+  languageName: node
+  linkType: hard
+
+"lottie-react-native@npm:7.3.1":
+  version: 7.3.1
+  resolution: "lottie-react-native@npm:7.3.1"
+  peerDependencies:
+    "@lottiefiles/dotlottie-react": ^0.6.5
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@lottiefiles/dotlottie-react":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 4f7923c0f21dc71fcb3ebac79f0d60f477c21cae4731c5e1fc8be61306e5e181a5b91f62bb77635086c888c685a28f20adb659e346ca8b71d2ad4d2dc124859a
   languageName: node
   linkType: hard
 

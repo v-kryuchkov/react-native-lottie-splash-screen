@@ -1,6 +1,7 @@
 import Expo
 import React
 import ReactAppDependencyProvider
+import SplashScreen
 
 @UIApplicationMain
 public class AppDelegate: ExpoAppDelegate {
@@ -28,6 +29,9 @@ public class AppDelegate: ExpoAppDelegate {
       in: window,
       launchOptions: launchOptions)
 #endif
+
+    // Setup Lottie splash overlay
+    SplashScreen.setupLottieSplash(in: window, lottieName: "loading", backgroundColor: UIColor.white, forceToCloseByHideMethod: false)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
