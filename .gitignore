@@ -51,3 +51,6 @@ jspm_packages
 !.yarn/versions
 
 package.tgz
+
+.DS_Store
+install-state.gz
