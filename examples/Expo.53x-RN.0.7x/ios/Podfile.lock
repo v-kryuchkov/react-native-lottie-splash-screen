@@ -1420,7 +1420,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-lottie-splash-screen (3.0.21):
+  - react-native-lottie-splash-screen (3.0.0):
     - lottie-ios
     - React
   - React-NativeModulesApple (0.79.5):
@@ -2045,7 +2045,7 @@ SPEC CHECKSUMS:
   React-logger: e6e6164f1753e46d1b7e2c8f0949cd7937eaf31b
   React-Mapbuffer: 5b4959cbd91e7e8fae42ab0f4b7c25b86fd139a1
   React-microtasksnativemodule: 1695ab137281dd03de967b7bbeb4e392601f6432
-  react-native-lottie-splash-screen: f678634d0acad56fee26c3594d324a51703f44ae
+  react-native-lottie-splash-screen: 61d5474c3e7d427f705759aec9ca4af59552ac35
   React-NativeModulesApple: 3ecc647742d33ad617bd2805902e3f91f2b3008f
   React-oscompat: 0592889a9fcf0eacb205532028e4a364e22907dd
   React-perflogger: 634408a9a0f5753faa577dfa81bc009edca01062
