@@ -15,6 +15,8 @@
 
   <style name="SplashScreen_SplashTheme" parent="Theme.AppCompat.NoActionBar">
       <item name="android:windowAnimationStyle">@style/SplashScreen_SplashAnimation</item>
+      <item name="windowActionBarOverlay">true</item>
+      <item name="android:windowTranslucentStatus">true</item>
   </style>
   <!-- End of copy -->
 </resources>
