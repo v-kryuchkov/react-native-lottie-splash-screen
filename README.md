@@ -13,11 +13,12 @@ Huge thanks to the original authors and contributors of `react-native-lottie-spl
 ## Contents
 - [Version Compatibilities](#versions-compatibilities)
 - [Examples](#examples)
-- [Installation - React Native Bare ≥ 0.77)](#installation-react-native--077)
+- [Installation - React Native Bare ≥ 0.7x](#installation-react-native--077)
 - [Installation - Expo (Bare Workflow)](#expo-bare-workflow)
 - [Usage](#usage)
 - [API](#api)
-- [Upgrade v2 → v3](#upgrade-v2--v3)
+- [Upgrade v2 → v3](#upgrade-v2--v3-react-native--077)
+- [Release notes](#release-notes-legacyv2-master-v3)
 - [Contribution](#contribution)
 
 
@@ -27,7 +28,7 @@ Huge thanks to the original authors and contributors of `react-native-lottie-spl
 | >= 0.77 | 3.x |
 | >= 0.70 & < 0.77 | [2.x](https://github.com/attarchi/react-native-lottie-splash-screen/tree/v2) |
 | < 0.70 | [1.x](https://github.com/attarchi/react-native-lottie-splash-screen/tree/v2?tab=readme-ov-file#first-stepdownload) |
-#### Warning: Version 3.x has no backward compatibility. You need to follow the [upgrade instructions](#upgrade-v2--v3).
+#### Warning: Version 3.x has no backward compatibility. You need to follow the [upgrade instructions](#upgrade-v2--v3-react-native--077).
 
 
 ## Examples
@@ -285,6 +286,52 @@ SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie, false)
 4. JS:
    - Keep `LottieSplashScreen?.hide()` when your app is ready.
 </details>
+
+## Release notes: legacy/v2 → master (v3)
+
+### Summary
+- **Version**: 2.0.4 → 3.0.0
+- **Package rename**: `react-native-lottie-splash-screen` → `@attarchi/react-native-lottie-splash-screen`
+- **iOS**: Rewritten as a reusable Swift module; Obj‑C header removed; bridging header added
+- **Android**: Defaults improved (blank splash by default, default styles), target version update, Kotlin implementation refined
+- **Examples**: Legacy RN 0.69 example removed; new Expo 53.x bare example added; RN 0.7x CLI example upgraded
+- **Dependencies**: `lottie-react-native` 6.7.2 → 7.3.1, `lottie-ios` 4.4.3 → 4.5.0
+- **Docs**: README revamped, screenshots added and reorganized
+
+### Breaking changes
+- **Package scope/name change**
+  - Old: `react-native-lottie-splash-screen`
+  - New: `@attarchi/react-native-lottie-splash-screen`
+- **iOS module restructuring to Swift**
+  - Introduces Swift source (`ios/RNSplashScreen.swift`) with bridging header (`ios/RNSplashScreen-Bridging-Header.h`)
+  - Legacy Obj‑C interface removed (`ios/RNSplashScreen.h`)
+  - Projects without Swift may need a Swift toolchain configuration
+- **Legacy example removal**
+  - `examples/RN.0.69` and related assets removed
+
+### New features
+- **Reusable Swift module for iOS**
+- **Expo 53.x bare example project**
+  - Located in `examples/Expo.53x-RN.0.7x`
+  - Includes Android/iOS configs, assets, and scripts
+- **Improved documentation** in `README.md`
+
+### Enhancements
+- **Android**
+  - Default splash screen set to blank; Android default styles applied
+  - Target Android version updated and aligned with `lottie-react-native@7.x`
+  - `android/src/main/java/.../SplashScreen.kt` refined
+  - `AndroidManifest.xml` and `build.gradle` adjustments
+- **Examples**
+  - RN 0.7x CLI example updated; iOS side moved to Swift AppDelegate; Gradle wrappers updated
+- **Repository/package updates**
+  - Repository re-scoped to `attarchi` org
+
+### Dependency updates
+- **lottie-react-native**: 6.7.2 → 7.3.1
+- **lottie-ios**: 4.4.3 → 4.5.0
+- Peer dependency remains: `react-native >= 0.70.0`
+
 
 ## Contribution
 
