@@ -61,7 +61,7 @@ Follow these steps in order.
 ### 1) Install packages
 
 ```bash
-yarn add @attarchi/react-native-lottie-splash-screen lottie-react-native@7.3.1
+yarn add "@attarchi/react-native-lottie-splash-screen@3.0.0" "lottie-react-native@7.3.2"
 
 cd ios && bundle install && bundle exec pod install
 ```
@@ -163,12 +163,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 </resources>
 ```
 
-5. Update `MainActivity.kt`:
+5. Update `MainActivity.kt` file:
+If the `onCreate` function does not exist, create it.  
+Be sure to add `import android.os.Bundle` at the top of the file if it's not already present.
 
 ```kotlin
 ...
 import com.facebook.react.defaults.DefaultReactActivityDelegate
-import org.devio.rn.splashscreen.SplashScreen // <- Add this line
+import org.devio.rn.splashscreen.SplashScreen                   // <- Add this line
 import android.os.Bundle
 
 class MainActivity : ReactActivity() {
@@ -259,7 +261,7 @@ You can see all needed changes together in these commits:
 1. Update packages:
 
 ```bash
-yarn add @attarchi/react-native-lottie-splash-screen@^3 lottie-react-native@^7
+yarn add "@attarchi/react-native-lottie-splash-screen@^3.0.0" "lottie-react-native@^7.3.2"
 cd ios && bundle exec pod install
 ```
 
