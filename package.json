@@ -12,7 +12,10 @@
     "bare:android": "yarn workspace example7x android",
     "expo:install": "yarn pack && yarn workspace expo7x install",
     "expo:ios": "yarn workspace expo7x ios",
-    "expo:android": "yarn workspace expo7x android"
+    "expo:android": "yarn workspace expo7x android",
+    "bare8x:install": "yarn pack && yarn workspace bare8x install && (cd examples/RN.0.8x/ios && bundle install && bundle exec pod install)",
+    "bare8x:ios": "yarn workspace bare8x ios",
+    "bare8x:android": "yarn workspace bare8x android"
   },
   "repository": {
     "type": "git",
