@@ -31,6 +31,11 @@ Huge thanks to the original authors and contributors of `react-native-lottie-spl
 
 
 ## Examples
+
+![react-native-lottie-splash-screen-Android](screenshot/Lottie-Splash-Screen-Android.gif)
+![react-native-lottie-splash-screen-iOS](screenshot/Lottie-Splash-Screen-IOS.gif)
+
+
 You can clone this project and run the examples with these commands:
 
 ```bash
