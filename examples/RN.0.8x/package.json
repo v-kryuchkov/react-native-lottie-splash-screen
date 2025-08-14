@@ -10,7 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@attarchi/react-native-lottie-splash-screen": "file:../../package.tgz",
     "@react-native/new-app-screen": "0.80.1",
+    "lottie-react-native": "7.3.2",
     "react": "19.1.0",
     "react-native": "0.80.1"
   },
