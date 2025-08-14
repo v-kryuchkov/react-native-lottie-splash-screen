@@ -18,7 +18,7 @@ Huge thanks to the original authors and contributors of `react-native-lottie-spl
 - [Usage](#usage)
 - [API](#api)
 - [Upgrade v2 → v3](#upgrade-v2--v3-react-native--077)
-- [Release notes](#release-notes-legacyv2-master-v3)
+- [Release notes](#release-notes-legacyv2--master-v3)
 - [Contribution](#contribution)
 
 
@@ -298,40 +298,7 @@ SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie, false)
 - **Dependencies**: `lottie-react-native` 6.7.2 → 7.3.1, `lottie-ios` 4.4.3 → 4.5.0
 - **Docs**: README revamped, screenshots added and reorganized
 
-### Breaking changes
-- **Package scope/name change**
-  - Old: `react-native-lottie-splash-screen`
-  - New: `@attarchi/react-native-lottie-splash-screen`
-- **iOS module restructuring to Swift**
-  - Introduces Swift source (`ios/RNSplashScreen.swift`) with bridging header (`ios/RNSplashScreen-Bridging-Header.h`)
-  - Legacy Obj‑C interface removed (`ios/RNSplashScreen.h`)
-  - Projects without Swift may need a Swift toolchain configuration
-- **Legacy example removal**
-  - `examples/RN.0.69` and related assets removed
-
-### New features
-- **Reusable Swift module for iOS**
-- **Expo 53.x bare example project**
-  - Located in `examples/Expo.53x-RN.0.7x`
-  - Includes Android/iOS configs, assets, and scripts
-- **Improved documentation** in `README.md`
-
-### Enhancements
-- **Android**
-  - Default splash screen set to blank; Android default styles applied
-  - Target Android version updated and aligned with `lottie-react-native@7.x`
-  - `android/src/main/java/.../SplashScreen.kt` refined
-  - `AndroidManifest.xml` and `build.gradle` adjustments
-- **Examples**
-  - RN 0.7x CLI example updated; iOS side moved to Swift AppDelegate; Gradle wrappers updated
-- **Repository/package updates**
-  - Repository re-scoped to `attarchi` org
-
-### Dependency updates
-- **lottie-react-native**: 6.7.2 → 7.3.1
-- **lottie-ios**: 4.4.3 → 4.5.0
-- Peer dependency remains: `react-native >= 0.70.0`
-
+**Check the [release notes](https://github.com/attarchi/react-native-lottie-splash-screen/releases) for more details.**
 
 ## Contribution
 
