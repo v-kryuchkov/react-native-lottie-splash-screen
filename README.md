@@ -91,14 +91,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Before return, add this:
     // Setup Lottie splash screen using the SplashScreen module
-    SplashScreen.setupLottieSplash(in: window, lottieName: "loading", backgroundColor: UIColor.white, forceToCloseByHideMethod: false)
+    SplashScreen.setupLottieSplash(
+      in: window,
+      lottieName: "loading",
+      backgroundColor: UIColor.white,
+      forceToCloseByHideMethod: false
+    )
 
     return true
   }
 }
-
 ```
 
+<details>
+  <summary>Custom splash screen:</summary>
+  By default, this package provides a splash screen with customizable background color. If you require more advanced control—such as custom sizing, positioning, or additional view configuration—you can create and display your own Lottie animation view.  
+  Instead of using `SplashScreen.setupLottieSplash`, follow the example below to set up a fully custom splash screen:
+
+  ```swift
+  import SplashScreen
+  import Lottie
+
+  @main
+  class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(...) -> Bool {
+      ...
+
+      // Safely get the root view of the main window
+      guard let rootView = window?.rootViewController?.view else { return }
+
+      // Define your desired splash background color (example: deep blue)
+      let backgroundColor = UIColor(red: 0.039, green: 0.172, blue: 0.369, alpha: 1.0)
+      rootView.backgroundColor = backgroundColor
+
+      // Initialize the Lottie animation view with your animation file (e.g., "loading.json")
+      let animationUIView = LottieAnimationView(name: "loading")
+
+      // Set the animation view's frame to a fixed size (250x250)
+      animationUIView.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
+
+      // Position the animation view vertically above the center (e.g., 100pt higher)
+      animationUIView.center = CGPoint(x: rootView.center.x, y: rootView.center.y - 100)
+
+      // Match the animation view's background to the splash background
+      animationUIView.backgroundColor = backgroundColor
+
+      // Ensure the animation view appears above other subviews
+      animationUIView.layer.zPosition = 1
+
+      // Display your custom splash screen using the package's helper
+      SplashScreen.setupCustomLottieSplash(
+        in: window,
+        animationView: animationUIView,
+        inRootView: rootView,
+        forceToCloseByHideMethod: false
+      )
+
+      return true
+    }
+  }
+  ```
+
+</details>
 3. Remove the default iOS launch screen.
 
    By default, iOS displays the launch storyboard before your app is ready. To ensure a seamless transition to your Lottie splash, you should make the launch screen blank or match the first frame of your Lottie animation.
@@ -292,9 +346,9 @@ SplashScreen.show(this, R.style.SplashScreen_SplashTheme, R.id.lottie, false)
 ## Release notes: legacy/v2 → master (v3)
 
 ### Summary
-- **Version**: 2.0.4 → 3.0.0
+- **Version**: 2.0.4 → 3.0.1
 - **Package rename**: `react-native-lottie-splash-screen` → `@attarchi/react-native-lottie-splash-screen`
-- **iOS**: Rewritten as a reusable Swift module; Obj‑C header removed; bridging header added
+- **iOS**: Rewritten as a reusable Swift module; Obj‑C header removed; bridging header added; Default animation view
 - **Android**: Defaults improved (blank splash by default, default styles), target version update, Kotlin implementation refined
 - **Examples**: Legacy RN 0.69 example removed; new Expo 53.x bare example added; RN 0.7x CLI example upgraded
 - **Dependencies**: `lottie-react-native` 6.7.2 → 7.3.1, `lottie-ios` 4.4.3 → 4.5.0

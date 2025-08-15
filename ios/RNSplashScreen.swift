@@ -46,8 +46,16 @@ public class SplashScreen: NSObject, RCTBridgeModule {
 
         showLottieSplash(animationView, inRootView: rootView)
     }
-            
-    @objc public static func showLottieSplash(_ animationView: UIView, inRootView rootView: UIView) {
+    
+    @objc public static func setupCustomLottieSplash(in window: UIWindow?,  animationView: UIView, inRootView rootView: UIView, forceToCloseByHideMethod: Bool = false) {
+        self.window = window
+        self.forceToCloseByHideMethod = forceToCloseByHideMethod
+        self.isAnimationFinished = false
+        
+        showLottieSplash(animationView, inRootView: rootView)
+    }
+
+    @objc private static func showLottieSplash(_ animationView: UIView, inRootView rootView: UIView) {
         loadingView = animationView
         isAnimationFinished = false
         
