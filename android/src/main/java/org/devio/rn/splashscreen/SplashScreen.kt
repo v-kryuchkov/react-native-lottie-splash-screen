@@ -59,17 +59,14 @@ object SplashScreen {
                     override fun onAnimationEnd(animation: Animator) {
                         val animationDuration = (System.currentTimeMillis() - animationStartTime) / 1000.0
                         setAnimationFinished(true)
-                        
-                        // If forceToCloseByHideMethod is false, auto-hide after animation
-                        if (!forceToCloseByHideMethod) {
-                            if (animationDuration > 0.5) {
+
+                        if (animationDuration > 0.5) {
+                            hideSplashScreen()
+                        } else {
+                            // Wait for minimum duration
+                            lottie?.postDelayed({
                                 hideSplashScreen()
-                            } else {
-                                // Wait for minimum duration
-                                lottie?.postDelayed({
-                                    hideSplashScreen()
-                                }, ((2.0 - animationDuration) * 1000).toLong())
-                            }
+                            }, ((2.0 - animationDuration) * 1000).toLong())
                         }
                     }
 
