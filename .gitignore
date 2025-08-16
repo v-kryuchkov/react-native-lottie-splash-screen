@@ -52,5 +52,5 @@ jspm_packages
 
 package.tgz
 
-.DS_Store
-install-state.gz
+**/.DS_Store
+**/.yarn/install-state.gz
