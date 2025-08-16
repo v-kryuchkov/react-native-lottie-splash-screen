@@ -71,7 +71,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.79.5)
   - hermes-engine/Pre-built (0.79.5)
   - lottie-ios (4.5.0)
-  - lottie-react-native (7.3.1):
+  - lottie-react-native (7.3.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1420,7 +1420,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-lottie-splash-screen (3.0.0):
+  - react-native-lottie-splash-screen (3.0.1):
     - lottie-ios
     - React
   - React-NativeModulesApple (0.79.5):
@@ -2013,7 +2013,7 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: f03b0e06d3882d71e67e45b073bb827da1a21aae
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  lottie-react-native: 6a52403e4090a499d7080fea0c92f31df797030e
+  lottie-react-native: ba2c35500f82e2690a5eacd0a6580e1333ed27cb
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: 5f638f65935e273753b1f31a365db6a8d6dc53b5
   RCTRequired: 8b46a520ea9071e2bc47d474aa9ca31b4a935bd8
@@ -2045,7 +2045,7 @@ SPEC CHECKSUMS:
   React-logger: e6e6164f1753e46d1b7e2c8f0949cd7937eaf31b
   React-Mapbuffer: 5b4959cbd91e7e8fae42ab0f4b7c25b86fd139a1
   React-microtasksnativemodule: 1695ab137281dd03de967b7bbeb4e392601f6432
-  react-native-lottie-splash-screen: 61d5474c3e7d427f705759aec9ca4af59552ac35
+  react-native-lottie-splash-screen: 9b8217cad9d82b41a215c0993596fba7c7e95fc4
   React-NativeModulesApple: 3ecc647742d33ad617bd2805902e3f91f2b3008f
   React-oscompat: 0592889a9fcf0eacb205532028e4a364e22907dd
   React-perflogger: 634408a9a0f5753faa577dfa81bc009edca01062
@@ -2082,4 +2082,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9f8c3c3d66db158963f7ccc503d63428526bdea7
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

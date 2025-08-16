@@ -13,7 +13,7 @@
     "@attarchi/react-native-lottie-splash-screen": "file:../../package.tgz",
     "expo": "~53.0.20",
     "expo-status-bar": "~2.2.3",
-    "lottie-react-native": "7.3.1",
+    "lottie-react-native": "7.3.2",
     "react": "19.0.0",
     "react-native": "0.79.5"
   },

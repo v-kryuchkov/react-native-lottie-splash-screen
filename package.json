@@ -1,6 +1,6 @@
 {
   "name": "@attarchi/react-native-lottie-splash-screen",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A lottie splash screen for react-native with Swift implementation, hide when application loaded ,it works on iOS and Android.",
   "type": "module",
   "main": "index.js",
@@ -52,7 +52,7 @@
   "homepage": "https://github.com/attarchi/react-native-lottie-splash-screen#readme",
   "dependencies": {
     "lottie-ios": "4.5.0",
-    "lottie-react-native": "7.3.1"
+    "lottie-react-native": "7.3.2"
   },
   "workspaces": [
     "./examples/*"

@@ -61,7 +61,7 @@ Follow these steps in order.
 ### 1) Install packages
 
 ```bash
-yarn add "@attarchi/react-native-lottie-splash-screen@3.0.0" "lottie-react-native@7.3.2"
+yarn add "@attarchi/react-native-lottie-splash-screen@3.0.1" "lottie-react-native@7.3.2"
 
 cd ios && bundle install && bundle exec pod install
 ```
@@ -315,7 +315,7 @@ You can see all needed changes together in these commits:
 1. Update packages:
 
 ```bash
-yarn add "@attarchi/react-native-lottie-splash-screen@^3.0.0" "lottie-react-native@^7.3.2"
+yarn add "@attarchi/react-native-lottie-splash-screen@^3.0.1" "lottie-react-native@^7.3.2"
 cd ios && bundle exec pod install
 ```
 

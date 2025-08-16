@@ -16,14 +16,14 @@ __metadata:
   linkType: hard
 
 "@attarchi/react-native-lottie-splash-screen@file:../../package.tgz::locator=bare8x%40workspace%3A.":
-  version: 3.0.0
+  version: 3.0.1
   resolution: "@attarchi/react-native-lottie-splash-screen@file:../../package.tgz::locator=bare8x%40workspace%3A."
   dependencies:
     lottie-ios: 4.5.0
     lottie-react-native: 7.3.1
   peerDependencies:
     react-native: ">=0.70.0"
-  checksum: 6c0bc2678327a08fb0ece8ac1e293d96c6413a91d740d496eff34592815b4373b091dfe1fd125480e5f6dca93aad3c7d41e4b48817ba14f9a0502317e79db85f
+  checksum: 9e9660f71478ff96b207559fa65d9ad2ebf734f1e22543b853ed015cd0a5b12755ec1d6e8519939b71dd5e0f2abfdb2c6e7d5c3767f23c169a94467cabea1d89
   languageName: node
   linkType: hard
 
@@ -2526,11 +2526,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 24.2.1
-  resolution: "@types/node@npm:24.2.1"
+  version: 24.3.0
+  resolution: "@types/node@npm:24.3.0"
   dependencies:
     undici-types: ~7.10.0
-  checksum: d7a12a35bcb6ade13787bd9b40d8f59b96170f228dfbd19326170b4df2a66ae86cf21eec6867e92f979405235431e580a9668b167aa3ce8e89531c00792551d3
+  checksum: 0f98e492032007d7be811b5598d24b6260f6ef3d21b6fe3b9ca61a1c88f70d5d94c33f361b0f2bd9a1f5963426584c7c2514e29ca69b0649f6b075e7abd551cb
   languageName: node
   linkType: hard
 
@@ -4021,9 +4021,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.199":
-  version: 1.5.200
-  resolution: "electron-to-chromium@npm:1.5.200"
-  checksum: 2784fb7d40ab80d3dee900a8c9f4307d5d2fe16dcace62ba16b0e64ee72fe3c664c080241fa1142e295c496bdd9eeb82affccfd085c64ad93c3037d3c785d748
+  version: 1.5.203
+  resolution: "electron-to-chromium@npm:1.5.203"
+  checksum: f0302b679f638936dac945d08b159130968398787c4b0157925ffdf9fae1ca73d98d0fb013d64fd0404840724cb679c2bc0e8fd2c7ed0c73b3c738a891d428b5
   languageName: node
   linkType: hard
 
