@@ -14,6 +14,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Build
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import java.lang.ref.WeakReference
 
 object SplashScreen {
@@ -23,9 +24,21 @@ object SplashScreen {
     private var waiting = false
     private var forceToCloseByHideMethod = false
     private var animationStartTime: Long = 0
+    private var minAnimationDuration: Double? = null
+    private var maxAnimationDuration: Double? = null
+    private var currentLottieId: Int = 0
+    private var isLoopingAnimation: Boolean = false
 
 
     fun show(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false) {
+        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, false, -1.0, -1.0)
+    }
+
+    fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0) {
+        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration)
+    }
+
+    fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0) {
         if (activity == null) {
             println("SplashScreen: ERROR - Activity is null")
             return
@@ -33,6 +46,12 @@ object SplashScreen {
         mActivity = WeakReference(activity)
         this.forceToCloseByHideMethod = forceToCloseByHideMethod
         this.isAnimationFinished = false
+        this.currentLottieId = lottieId
+        this.isLoopingAnimation = loopAnimation
+        
+        // Store duration values
+        this.minAnimationDuration = if (minDuration > 0) minDuration else null
+        this.maxAnimationDuration = if (maxDuration > 0) maxDuration else null
         
         activity.runOnUiThread {
             if (!activity.isFinishing) {
@@ -41,15 +60,18 @@ object SplashScreen {
                 mSplashDialog?.setCancelable(false)
                 val lottie = mSplashDialog?.findViewById<LottieAnimationView>(lottieId)
 
-                // Configure Lottie animation to play once and not loop
+                // Configure Lottie animation repeat behavior
                 // These settings will override any XML configuration
-                lottie?.repeatCount = 0
+                if (loopAnimation) {
+                    lottie?.repeatCount = LottieDrawable.INFINITE
+                } else {
+                    lottie?.repeatCount = 0
+                }
                 lottie?.speed = 1.0f
                 
                 // Ensure animation is stopped before starting programmatically
                 lottie?.cancelAnimation()
                 lottie?.progress = 0f
-
 
                 lottie?.addAnimatorListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator) {
@@ -57,17 +79,8 @@ object SplashScreen {
                     }
 
                     override fun onAnimationEnd(animation: Animator) {
-                        val animationDuration = (System.currentTimeMillis() - animationStartTime) / 1000.0
                         setAnimationFinished(true)
-
-                        if (animationDuration > 0.5) {
-                            hideSplashScreen()
-                        } else {
-                            // Wait for minimum duration
-                            lottie?.postDelayed({
-                                hideSplashScreen()
-                            }, ((2.0 - animationDuration) * 1000).toLong())
-                        }
+                        checkAndHideSplashScreen()
                     }
 
                     override fun onAnimationCancel(animation: Animator) {
@@ -78,6 +91,16 @@ object SplashScreen {
                         println("SplashScreen: Animation repeated (this shouldn't happen)")
                     }
                 })
+
+                // Set up max duration timeout if specified
+                maxAnimationDuration?.let { maxDur ->
+                    lottie?.postDelayed({
+                        if (!isAnimationFinished) {
+                            setAnimationFinished(true)
+                            hideSplashScreen()
+                        }
+                    }, (maxDur * 1000).toLong())
+                }
                 
                 // Start the animation manually after a small delay
                 lottie?.postDelayed({
@@ -96,11 +119,40 @@ object SplashScreen {
     fun setAnimationFinished(flag: Boolean) {
         isAnimationFinished = flag
     }
+    
+    private fun checkAndHideSplashScreen() {
+        val animationDuration = (System.currentTimeMillis() - animationStartTime) / 1000.0
+        
+        val shouldHideImmediately = if (minAnimationDuration == null) {
+            animationDuration > 0.5 // Original logic
+        } else {
+            animationDuration >= minAnimationDuration!! // Custom logic
+        }
+
+        if (shouldHideImmediately) {
+            hideSplashScreen()
+        } else {
+            val targetDuration = minAnimationDuration ?: 2.0
+            val waitTime = targetDuration - animationDuration
+            mSplashDialog?.findViewById<LottieAnimationView>(currentLottieId)?.postDelayed({
+                hideSplashScreen()
+            }, (waitTime * 1000).toLong())
+        }
+    }
 
     fun hide(activity: Activity?) {
         // Only hide if forceToCloseByHideMethod is true
         if (forceToCloseByHideMethod) {
             hideSplashScreen()
+            return
+        }
+        // Hide splash screen if:
+        // 1. minAnimationDuration is set (custom timing), OR  
+        // 2. loopAnimation is enabled (infinite loop needs manual control)
+        // Otherwise, let animation finish naturally
+        if (forceToCloseByHideMethod || minAnimationDuration != null || isLoopingAnimation) {
+            checkAndHideSplashScreen()
+            return
         }
     }
     

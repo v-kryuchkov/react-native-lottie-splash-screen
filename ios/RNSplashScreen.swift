@@ -16,9 +16,13 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     
     // MARK: - Static Properties
     private static var forceToCloseByHideMethod = false
+    private static var loopAnimation = false
     private static var loadingView: UIView?
     private static var isAnimationFinished = false
     private static var window: UIWindow?
+    private static var animationStartTime: CFTimeInterval = 0
+    private static var minAnimationDuration: TimeInterval?
+    private static var maxAnimationDuration: TimeInterval?
     
     // MARK: - RCTBridgeModule
     public static func moduleName() -> String! {
@@ -28,13 +32,24 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     public func methodQueue() -> DispatchQueue! {
         return DispatchQueue.main
     }
-    
+
     @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1)
+    }
+
+    @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: loopAnimation, minAnimationDuration: minAnimationDuration, maxAnimationDuration: maxAnimationDuration)
+    }
+    
+    @objc public static func setupLottieSplashInternal(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval) {
         guard let rootViewController = window?.rootViewController,
               let rootView = rootViewController.view else { return }
         
         self.window = window
         self.forceToCloseByHideMethod = forceToCloseByHideMethod
+        self.loopAnimation = loopAnimation
+        self.minAnimationDuration = minAnimationDuration > 0 ? minAnimationDuration : nil
+        self.maxAnimationDuration = maxAnimationDuration > 0 ? maxAnimationDuration : nil
         self.isAnimationFinished = false
         
         rootView.backgroundColor = backgroundColor
@@ -43,6 +58,9 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         animationView.frame = rootView.frame
         animationView.center = rootView.center
         animationView.backgroundColor = backgroundColor
+        if loopAnimation {
+            animationView.loopMode = .loop
+        }
 
         showLottieSplash(animationView, inRootView: rootView)
     }
@@ -58,6 +76,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     @objc private static func showLottieSplash(_ animationView: UIView, inRootView rootView: UIView) {
         loadingView = animationView
         isAnimationFinished = false
+        animationStartTime = CACurrentMediaTime()
         
         // Ensure splash screen appears on top of React Native screen
         rootView.addSubview(animationView)
@@ -69,31 +88,70 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         // Temporarily raise the window level to ensure it stays on top
         let originalWindowLevel = window?.windowLevel
         window?.windowLevel = UIWindow.Level.alert + 1
+
+        // Set up max duration timeout if specified
+        if let maxDuration = maxAnimationDuration {
+            DispatchQueue.main.asyncAfter(deadline: .now() + maxDuration) {
+                if !isAnimationFinished {
+                    isAnimationFinished = true
+                    checkAndHideSplashScreen()
+                }
+            }
+        }
         
         // Play animation and handle completion
         if let lottieView = animationView as? LottieAnimationView {
             lottieView.play { finished in
                 DispatchQueue.main.async {
                     isAnimationFinished = true
-                    hideSplashScreen()
+                    checkAndHideSplashScreen()
                 }
             }
         } else {
             // Fallback for non-Lottie views
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 isAnimationFinished = true
-                hideSplashScreen()
+                checkAndHideSplashScreen()
             }
         }
     }
     
-
+    private static func checkAndHideSplashScreen() {
+        guard let minDuration = minAnimationDuration else {
+            // No minimum duration set, hide immediately
+            hideSplashScreen()
+            return
+        }
+        
+        let currentTime = CACurrentMediaTime()
+        let elapsedTime = currentTime - animationStartTime
+        
+        if elapsedTime >= minDuration {
+            // Minimum time has passed, hide immediately
+            hideSplashScreen()
+        } else {
+            // Wait for remaining time to reach minimum duration
+            let remainingTime = minDuration - elapsedTime
+            DispatchQueue.main.asyncAfter(deadline: .now() + remainingTime) {
+                hideSplashScreen()
+            }
+        }
+    }
     
     
     @objc public static func hide() {
         // Only hide if forceToCloseByHideMethod is true
         if forceToCloseByHideMethod {
             hideSplashScreen()
+            return
+        }
+        // Hide splash screen if:
+        // 1. minAnimationDuration is set (custom timing), OR  
+        // 2. loopAnimation is enabled (infinite loop needs manual control)
+        // Otherwise, let animation finish naturally
+        if minAnimationDuration != nil || loopAnimation {
+            checkAndHideSplashScreen()
+            return
         }
     }
     
