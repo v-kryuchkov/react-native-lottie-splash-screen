@@ -12,7 +12,12 @@ package org.devio.rn.splashscreen
 import android.animation.Animator
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context;
 import android.os.Build
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.os.Handler
+import android.os.Looper
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.lang.ref.WeakReference
@@ -36,7 +41,7 @@ object SplashScreen {
     }
 
     fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false) {
-        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration)
+        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration, vibrate)
     }
 
     fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false) {
@@ -50,11 +55,11 @@ object SplashScreen {
         this.currentLottieId = lottieId
         this.isLoopingAnimation = loopAnimation
         this.vibrate = vibrate
-        
+
         // Store duration values
         this.minAnimationDuration = if (minDuration > 0) minDuration else null
         this.maxAnimationDuration = if (maxDuration > 0) maxDuration else null
-        
+
         activity.runOnUiThread {
             if (!activity.isFinishing) {
                 mSplashDialog = Dialog(activity, themeResId)
@@ -70,7 +75,7 @@ object SplashScreen {
                     lottie?.repeatCount = 0
                 }
                 lottie?.speed = 1.0f
-                
+
                 // Ensure animation is stopped before starting programmatically
                 lottie?.cancelAnimation()
                 lottie?.progress = 0f
@@ -103,7 +108,7 @@ object SplashScreen {
                         }
                     }, (maxDur * 1000).toLong())
                 }
-                
+
                 // Start the animation manually after a small delay
                 lottie?.postDelayed({
                     animationStartTime = System.currentTimeMillis()
@@ -121,10 +126,10 @@ object SplashScreen {
     fun setAnimationFinished(flag: Boolean) {
         isAnimationFinished = flag
     }
-    
+
     private fun checkAndHideSplashScreen() {
         val animationDuration = (System.currentTimeMillis() - animationStartTime) / 1000.0
-        
+
         val shouldHideImmediately = if (minAnimationDuration == null) {
             animationDuration > 0.5 // Original logic
         } else {
@@ -149,7 +154,7 @@ object SplashScreen {
             return
         }
         // Hide splash screen if:
-        // 1. minAnimationDuration is set (custom timing), OR  
+        // 1. minAnimationDuration is set (custom timing), OR
         // 2. loopAnimation is enabled (infinite loop needs manual control)
         // Otherwise, let animation finish naturally
         if (forceToCloseByHideMethod || minAnimationDuration != null || isLoopingAnimation) {
@@ -157,16 +162,15 @@ object SplashScreen {
             return
         }
     }
-    
+
     private fun hideSplashScreen() {
         var _activity = mActivity?.get()
         if (_activity == null) {
             return
         }
 
-        if _vibrate = vibrate?.get()
-        if (_vibrate == true) {
-            val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (this.vibrate == true) {
+            val vibrator = _activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= 26) {
                 vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {
@@ -174,21 +178,23 @@ object SplashScreen {
             }
         }
 
-        _activity.runOnUiThread {
-            if (mSplashDialog != null && mSplashDialog?.isShowing == true) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            _activity.runOnUiThread {
+              if (mSplashDialog != null && mSplashDialog?.isShowing == true) {
                 var isDestroyed = false
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    isDestroyed = _activity.isDestroyed
+                  isDestroyed = _activity.isDestroyed
                 }
 
                 if (!_activity.isFinishing && !isDestroyed) {
-                    mSplashDialog?.dismiss()
-                    mSplashDialog = null
-                    waiting = true
+                  mSplashDialog?.dismiss()
+                  mSplashDialog = null
+                  waiting = true
                 }
+              }
             }
-        }
+        }, 300)
     }
     
     @JvmStatic
