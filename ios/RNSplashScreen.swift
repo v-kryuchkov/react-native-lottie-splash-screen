@@ -23,6 +23,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     private static var animationStartTime: CFTimeInterval = 0
     private static var minAnimationDuration: TimeInterval?
     private static var maxAnimationDuration: TimeInterval?
+    private static var vibrate = false
     
     // MARK: - RCTBridgeModule
     public static func moduleName() -> String! {
@@ -33,15 +34,15 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         return DispatchQueue.main
     }
 
-    @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false) {
-        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1)
+    @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, vibrate: Bool = false) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1, vibrate)
     }
 
-    @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval) {
-        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: loopAnimation, minAnimationDuration: minAnimationDuration, maxAnimationDuration: maxAnimationDuration)
+    @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: loopAnimation, minAnimationDuration: minAnimationDuration, maxAnimationDuration: maxAnimationDuration, vibrate: vibrate)
     }
     
-    @objc public static func setupLottieSplashInternal(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval) {
+    @objc public static func setupLottieSplashInternal(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false) {
         guard let rootViewController = window?.rootViewController,
               let rootView = rootViewController.view else { return }
         
@@ -51,6 +52,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         self.minAnimationDuration = minAnimationDuration > 0 ? minAnimationDuration : nil
         self.maxAnimationDuration = maxAnimationDuration > 0 ? maxAnimationDuration : nil
         self.isAnimationFinished = false
+        self.vibrate = vibrate
         
         rootView.backgroundColor = backgroundColor
         
@@ -157,8 +159,13 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     
     private static func hideSplashScreen() {
         guard let loadingView = loadingView else { return }
+
+        if (self.vibrate == true) {
+            let notificationGenerator = UINotificationFeedbackGenerator()
+            notificationGenerator.notificationOccurred(.success)
+        }
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             UIView.animate(withDuration: 0.2, animations: {
                 loadingView.alpha = 0.0
             }, completion: { _ in
