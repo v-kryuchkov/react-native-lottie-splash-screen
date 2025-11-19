@@ -28,17 +28,18 @@ object SplashScreen {
     private var maxAnimationDuration: Double? = null
     private var currentLottieId: Int = 0
     private var isLoopingAnimation: Boolean = false
+    private var vibrate: Boolean = false
 
 
-    fun show(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false) {
-        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, false, -1.0, -1.0)
+    fun show(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, vibrate: Boolean = false) {
+        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, false, -1.0, -1.0, vibrate)
     }
 
-    fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0) {
+    fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false) {
         showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration)
     }
 
-    fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0) {
+    fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false) {
         if (activity == null) {
             println("SplashScreen: ERROR - Activity is null")
             return
@@ -48,6 +49,7 @@ object SplashScreen {
         this.isAnimationFinished = false
         this.currentLottieId = lottieId
         this.isLoopingAnimation = loopAnimation
+        this.vibrate = vibrate
         
         // Store duration values
         this.minAnimationDuration = if (minDuration > 0) minDuration else null
@@ -160,6 +162,16 @@ object SplashScreen {
         var _activity = mActivity?.get()
         if (_activity == null) {
             return
+        }
+
+        if _vibrate = vibrate?.get()
+        if (_vibrate == true) {
+            val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= 26) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                vibrator.vibrate(200)
+            }
         }
 
         _activity.runOnUiThread {
