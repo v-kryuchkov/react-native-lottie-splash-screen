@@ -35,7 +35,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     }
 
     @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, vibrate: Bool = false) {
-        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1, vibrate)
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1, vibrate: vibrate)
     }
 
     @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false) {
