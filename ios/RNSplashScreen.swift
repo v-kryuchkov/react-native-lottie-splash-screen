@@ -165,7 +165,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
             notificationGenerator.notificationOccurred(.success)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             UIView.animate(withDuration: 0.2, animations: {
                 loadingView.alpha = 0.0
             }, completion: { _ in
