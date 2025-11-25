@@ -28,7 +28,8 @@ Pod::Spec.new do |s|
   # Dependencies
   s.dependency "React"
   s.dependency "lottie-ios"
-  
+  s.dependency "Haptica"
+
   # Module configuration - match the Swift class name
   s.module_name = 'SplashScreen'
   
