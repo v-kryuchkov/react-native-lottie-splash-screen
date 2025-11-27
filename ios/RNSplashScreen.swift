@@ -29,6 +29,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     private static var hapticTimer: Timer?
     private static var patternDuration: TimeInterval = 0.25
     private static var vibrateLoop = false
+    private static var isHapticActive = false
 
     // MARK: - RCTBridgeModule
     public static func moduleName() -> String! {
@@ -170,9 +171,8 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     private static func hideSplashScreen() {
         guard let loadingView = loadingView else { return }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            stopHapticLoop()
-        }
+        // Stop haptic immediately when hiding splash screen
+        stopHapticLoop()
 
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.2, animations: {
@@ -191,8 +191,11 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     private static func startHapticLoop() {
         guard vibrate, let pattern = vibrationPattern else { return }
 
+        isHapticActive = true
+
         if vibrate == true {
           hapticTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: vibrateLoop) { _ in
+            guard isHapticActive else { return }
             Haptic.play(pattern, delay: patternDuration)
           }
 
@@ -201,8 +204,11 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     }
 
     private static func stopHapticLoop() {
+        isHapticActive = false
         hapticTimer?.invalidate()
         hapticTimer = nil
+        // Cancel all haptic operations in the queue to stop current vibration
+        Haptic.queue.cancelAllOperations()
     }
     
     
