@@ -27,7 +27,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
     private static var vibrate = false
     private static var vibrationPattern: String?
     private static var hapticTimer: Timer?
-    private static var patternDuration: TimeInterval = 0.25
+    private static var pauseDuration: TimeInterval = 0.25
     private static var vibrateLoop = false
     private static var isHapticActive = false
 
@@ -40,15 +40,15 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         return DispatchQueue.main
     }
 
-    @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, vibrate: Bool = false, vibrationPattern: String? = nil, patternDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
-        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1, vibrate: vibrate, vibrationPattern: vibrationPattern, patternDuration: patternDuration, vibrateLoop: vibrateLoop)
+    @objc public static func setupLottieSplash(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, vibrate: Bool = false, vibrationPattern: String? = nil, pauseDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: false, minAnimationDuration: -1, maxAnimationDuration: -1, vibrate: vibrate, vibrationPattern: vibrationPattern, pauseDuration: pauseDuration, vibrateLoop: vibrateLoop)
     }
 
-    @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false, vibrationPattern: String? = nil, patternDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
-        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: loopAnimation, minAnimationDuration: minAnimationDuration, maxAnimationDuration: maxAnimationDuration, vibrate: vibrate, vibrationPattern: vibrationPattern, patternDuration: patternDuration, vibrateLoop: vibrateLoop)
+    @objc public static func setupLottieSplashWithDuration(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false, vibrationPattern: String? = nil, pauseDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
+        setupLottieSplashInternal(in: window, lottieName: lottieName, backgroundColor: backgroundColor, forceToCloseByHideMethod: forceToCloseByHideMethod, loopAnimation: loopAnimation, minAnimationDuration: minAnimationDuration, maxAnimationDuration: maxAnimationDuration, vibrate: vibrate, vibrationPattern: vibrationPattern, pauseDuration: pauseDuration, vibrateLoop: vibrateLoop)
     }
 
-    @objc public static func setupLottieSplashInternal(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false, vibrationPattern: String? = nil, patternDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
+    @objc public static func setupLottieSplashInternal(in window: UIWindow?, lottieName: String, backgroundColor: UIColor = UIColor.white, forceToCloseByHideMethod: Bool = false, loopAnimation: Bool = false, minAnimationDuration: TimeInterval, maxAnimationDuration: TimeInterval, vibrate: Bool = false, vibrationPattern: String? = nil, pauseDuration: TimeInterval = 0.25, vibrateLoop: Bool = true) {
         guard let rootViewController = window?.rootViewController,
               let rootView = rootViewController.view else { return }
 
@@ -60,7 +60,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         self.isAnimationFinished = false
         self.vibrate = vibrate
         self.vibrationPattern = vibrationPattern
-        self.patternDuration = patternDuration
+        self.pauseDuration = pauseDuration
         self.vibrateLoop = vibrateLoop
 
         rootView.backgroundColor = backgroundColor
@@ -196,7 +196,7 @@ public class SplashScreen: NSObject, RCTBridgeModule {
         if vibrate == true {
           hapticTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: vibrateLoop) { _ in
             guard isHapticActive else { return }
-            Haptic.play(pattern, delay: patternDuration)
+            Haptic.play(pattern, delay: pauseDuration)
           }
 
           RunLoop.main.add(hapticTimer!, forMode: .common)
