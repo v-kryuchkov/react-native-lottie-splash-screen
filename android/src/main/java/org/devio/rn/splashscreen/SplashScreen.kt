@@ -35,7 +35,7 @@ object SplashScreen {
     private var isLoopingAnimation: Boolean = false
     private var vibrate: Boolean = false
     private var vibrationPattern: String? = null
-    private var patternDuration: Double = 0.25
+    private var pauseDuration: Double = 0.25
     private var vibrateLoop: Boolean = true
     private var vibrationHandler: Handler? = null
     private var vibrationRunnable: Runnable? = null
@@ -46,11 +46,11 @@ object SplashScreen {
         showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, false, -1.0, -1.0, vibrate, null, 0.25, true)
     }
 
-    fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false, vibrationPattern: String? = null, patternDuration: Double = 0.25, vibrateLoop: Boolean = true) {
-        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration, vibrate, vibrationPattern, patternDuration, vibrateLoop)
+    fun showWithDuration(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false, vibrationPattern: String? = null, pauseDuration: Double = 0.25, vibrateLoop: Boolean = true) {
+        showInternal(activity, themeResId, lottieId, forceToCloseByHideMethod, loopAnimation, minDuration, maxDuration, vibrate, vibrationPattern, pauseDuration, vibrateLoop)
     }
 
-    fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false, vibrationPattern: String? = null, patternDuration: Double = 0.25, vibrateLoop: Boolean = true) {
+    fun showInternal(activity: Activity?, themeResId: Int = R.style.SplashScreen_SplashTheme, lottieId: Int, forceToCloseByHideMethod: Boolean = false, loopAnimation: Boolean = false, minDuration: Double = -1.0, maxDuration: Double = -1.0, vibrate: Boolean = false, vibrationPattern: String? = null, pauseDuration: Double = 0.25, vibrateLoop: Boolean = true) {
         if (activity == null) {
             println("SplashScreen: ERROR - Activity is null")
             return
@@ -62,7 +62,7 @@ object SplashScreen {
         this.isLoopingAnimation = loopAnimation
         this.vibrate = vibrate
         this.vibrationPattern = vibrationPattern
-        this.patternDuration = patternDuration
+        this.pauseDuration = pauseDuration
         this.vibrateLoop = vibrateLoop
 
         // Store duration values
@@ -249,7 +249,7 @@ object SplashScreen {
                 }
 
                 if (vibrateLoop && isVibrationActive) {
-                    vibrationHandler?.postDelayed(this, (patternDuration * 1000).toLong())
+                    vibrationHandler?.postDelayed(this, (pauseDuration * 1000).toLong())
                 }
             }
         }
@@ -282,7 +282,7 @@ object SplashScreen {
         // "O" = Heavy impact
         // "x" = Soft impact
         // "X" = Rigid impact
-        // "-" = Pause (duration from patternDuration variable)
+        // "-" = Pause (duration from pauseDuration variable)
         // Android format: [initial_delay, vibrate1, pause1, vibrate2, pause2, ...]
         // First element is initial delay (0), then alternates vibrate/pause
         //
@@ -295,7 +295,7 @@ object SplashScreen {
             return longArrayOf(0, 200) // Default pattern
         }
 
-        val pauseDurationMs = (patternDuration * 1000).toLong() // Convert seconds to milliseconds
+        val pauseDurationMs = (pauseDuration * 1000).toLong() // Convert seconds to milliseconds
 
         val result = mutableListOf<Long>()
         result.add(0) // Initial delay (index 0)
@@ -331,7 +331,7 @@ object SplashScreen {
                     i++
                 }
                 '-' -> {
-                    // Explicit pause - use patternDuration variable
+                    // Explicit pause - use pauseDuration variable
                     // Pause can only be added after a vibration
                     if (result.size > 1 && result.size % 2 == 1) {
                         // Last element is a vibration (odd index), add pause after it
